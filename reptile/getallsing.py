@@ -12,7 +12,8 @@ import requests, json
 
 class downloader(object):
     def __init__(self):
-        self.server = 'http://5sing.kugou.com/xuanshang/default.html'
+        self.base = 'http://5sing.kugou.com'
+        self.server = 'http://5sing.kugou.com/xuanshang/friend/1.html'
         self.down = 'http://service.5sing.kugou.com/song/getPermission?jsoncallback=jQuery17036960075558330574_%s&songId=%s&songType=%s&_=%s'
         self.cookies = {}  # 初始化cookies字典变量
         self.alllist_name = []  # 存放
@@ -22,6 +23,10 @@ class downloader(object):
         self.alldown = []  # 最后获取json的地址
 
         self.useurl = []
+        self.usename = []
+        # 关注度大于1万的人
+        self.gooduseurl = []
+        self.nownuber=0  #当前集合里面遍历到了第几个
 
     def getcookie(self):
         f = open(r'test.txt', 'r')  # 打开所保存的cookies内容文件
@@ -58,23 +63,30 @@ class downloader(object):
         html = requests.get(url).text
         # 获取网页元素
         soup = BeautifulSoup(html, 'lxml')
-        # 根据条件筛选元素
-        a = soup.find_all('a', class_="show_userCard_link")
-        number = soup.find('id', id="totalfans")
-        ss=number.find('a')
-        print(ss.text)
-        # for item in a:
-        #     href = item.get('href')
-        #     self.useurl.append(href)
-        # nowint=len(self.useurl)
-        # print(nowint)
-        # if(nowint<22):
-        #     for i, item in enumerate(self.useurl):
-        #         self.get_alluser(self.useurl[i])
-        # else:
-        #         print(len(self.useurl))
-        #         print(self.useurl)
-        #         print("停止")
+        # 获取链接
+        c_wap = soup.find_all('dl', class_="c_wap")
+
+        # ss=totalfans.find('a')
+        # print(ss.text)
+        # 添加全部地址
+        for item in c_wap:
+            title = item.find('a', class_="show_userCard_link f14 lt").get('title')
+            href = item.find('div', class_="c_wap f_rank").find_all('label')[0].find('a').get('href')
+            fans = item.find('div', class_="c_wap f_rank").find_all('label')[1].find('a').text
+            if int(fans)>80000:
+                 if href  not  in self.useurl:
+                     self.useurl.append(href)
+                     self.usename.append(title)
+
+        nowint=len(self.useurl)
+        for i, item in enumerate(self.useurl):
+            if self.nownuber<len(self.useurl)-1:
+                self.nownuber=self.nownuber+1
+                print(str(nowint)+"当前正在获self.nownuber据"+str(self.nownuber)+self.useurl[self.nownuber]+self.usename[self.nownuber])
+                self.get_alluser(self.base+self.useurl[self.nownuber])
+
+
+
 
 
 
@@ -99,7 +111,10 @@ class downloader(object):
 if __name__ == "__main__":
     dl = downloader()
     dl.get_alluser(dl.server)
+
     print("完成停止")
+    print(dl.useurl)
+    print(dl.usename)
     # for i, item in enumerate(dl.useurl):
     # print(dl.useurl)
     # dl.getcookie()
