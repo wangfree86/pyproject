@@ -1,10 +1,10 @@
 try:
-    file=open('eeee.txt','r+')
+    file=open('film_name.text','r+')
 except Exception as e:
     print(e)
     response = input('do you want to create a new file:')
     if response=='y':
-        file=open('eeee.txt','w')
+        file=open('film_name.text','w')
     else:
         pass
 else:

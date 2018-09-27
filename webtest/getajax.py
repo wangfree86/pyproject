@@ -1,5 +1,10 @@
 import requests
-
+# https://gitbook.cn/books/5b88922e488ba027c5fac1c8/index.html
+# 而当我们查看该网页源代码时，却并没有电影相关的票房等信息，那么可以判断该页面可能使用了 Ajax
+# （即“Asynchronous Javascript And XML”（异步 JavaScript 和 XML））技术，即动态网页（是指跟静态
+# 网页相对的一种网页编程技术。静态网页，随着html代码的生成，页面的内容和显示效果就基本上不会发生变化了—
+# —除非你修改页面代码。而动态网页则不然，页面代码虽然没有变，但是显示的内容却是可以随着时间、环境或者数据
+# 库操作的结果而发生改变）。我们可以利用浏览器的开发者工具进行分析：
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 }
