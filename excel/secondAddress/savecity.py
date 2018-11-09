@@ -72,7 +72,7 @@ def main():
     tables = excel_table_byname()
     for a, row in enumerate(tables):
         type = row[3]
-        if type == 2:
+        if type == 1:
             film_dict = {}
             film_dict['C0'] = a
             film_dict['PLACECODE'] = row[1]
@@ -88,5 +88,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    savexml(managerList,'city.xml')
+    savexml(managerList,'pcity.xml')
     print(managerList)
+    print(len(managerList))
