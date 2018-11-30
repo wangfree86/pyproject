@@ -7,6 +7,9 @@ import datetime
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import re
+import pyperclip
+
+
 # world操作
 # 传入三个参数, 旧字符串, 新字符串, 文件对象7 8
 def replace_text(old_text, new_text, file):
@@ -26,29 +29,32 @@ def replace_text(old_text, new_text, file):
                     i.text = text
             print("替换后===>", f.text)
 
+
 def getday():
     allday = calendar.monthrange(datetime.datetime.now().year, datetime.datetime.now().month)[1]
     newday = datetime.datetime.now().day
-    finallyday=str(allday - newday)
+    finallyday = str(allday - newday)
     return finallyday
+
+
 def getweather():
     # 获取天气信息
-    base_url = "http://www.weather.com.cn/weather1d/101010100.shtml"
+    # base_url = "http://www.weather.com.cn/weather1d/101010100.shtml"
+    base_url = "https://www.tianqi.com/beijing/"
 
     url = base_url
 
     html = urlopen(url).read().decode('utf-8')
     soup = BeautifulSoup(html, features='lxml')
-
+    # print(html)
     # 天气
-    wea = soup.find_all('p', class_='wea')
-    # 温度，0是最高，1是最低
-    tem = soup.find_all('p', class_='tem')
-    # 日出时间
-    sun = soup.find('p', class_='sun sunUp')
-    weather="天气："+wea[0].text+"    "+tem[1].span.text+'-'+tem[0].text
-    weather=weather.replace("\n", "")
+    wea = soup.find('dd', class_='weather')
+    kongqi=soup.find('dd', class_='kongqi')
+    kongqistr=(kongqi.h5.text+kongqi.h6.text).replace('空气质量：', '')
+
+    weather = "天气：" + wea.span.text + "    " + kongqistr
     return weather
+
 
 if __name__ == '__main__':
     docx_file_name = 'C:/Users/XH/Desktop/模板.docx'
@@ -56,9 +62,17 @@ if __name__ == '__main__':
     # 获取文件对象
     file = docx.Document(docx_file_name)
     # 三个参数: 旧的字符串, 新的字符串, 文件对象
-    replace_text('天气', getweather(), file)
-    day='本月余额'+ getday()+'天'
-    replace_text('本月余额',day, file)
-    file.save(docx_file_name1)
-    print(docx_file_name1, "替换成功")
-    # main()
+    weather = getweather()
+
+    day = '本月余额' + getday() + '天'
+
+    # replace_text('天气', weather, file)
+    # replace_text('本月余额', day, file)
+    # file.save(docx_file_name1)
+
+    str = weather + '\n' + day
+    pyperclip.copy(str)
+
+    print("成功"+str)
+    # print(docx_file_name1, "替换成功"+str)
+# main()
