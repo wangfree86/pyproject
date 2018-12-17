@@ -1,0 +1,13 @@
+('d:\\anaconda3\\lib\\site-packages\\python_docx-0.8.5-py3.6.egg',
+ None,
+ {'*.cp36-win_amd64.pyd', '*.pyc', '*.pyw', '*.py', 'EGG-INFO', '*.pyd'},
+ 'DATA',
+ [('docx\\templates\\default-src.docx',
+   'd:\\anaconda3\\lib\\site-packages\\python_docx-0.8.5-py3.6.egg\\docx\\templates\\default-src.docx',
+   'DATA'),
+  ('docx\\templates\\default-styles.xml',
+   'd:\\anaconda3\\lib\\site-packages\\python_docx-0.8.5-py3.6.egg\\docx\\templates\\default-styles.xml',
+   'DATA'),
+  ('docx\\templates\\default.docx',
+   'd:\\anaconda3\\lib\\site-packages\\python_docx-0.8.5-py3.6.egg\\docx\\templates\\default.docx',
+   'DATA')])
