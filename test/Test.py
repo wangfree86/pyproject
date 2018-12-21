@@ -1,52 +1,40 @@
-import pymysql
-import datetime
+# -*- coding: utf-8 -*-
+# Created on 2018/3/22
+import os
+import requests, json
 
-host = 'localhost'
-username = 'root'
-password = '12345678'
-db_name = 'test'
-
-create_table_sql = """\
-CREATE TABLE fuck(
-id INT AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(255) UNIQUE ,
-nickname VARCHAR(255) NOT NULL ,
-birthday DATE
-)
+"""
+下载M3U8文件里的所有片段
 """
 
-insert_table_sql = """\
-INSERT INTO fuck(username,nickname,birthday)
- VALUES('{username}','{nickname}','{birthday}')
-"""
 
-query_table_sql = """\
-SELECT id,username,nickname,birthday
-FROM fuck
-"""
+def download(url):
+    allts = []
+    download_path = os.getcwd() + "\download"
+    if not os.path.exists(download_path):
+        os.mkdir(download_path)
+    all_content = requests.get(url).text  # 获取M3U8的文件内容
+    file_line = all_content.split("\n")  # 读取文件里的每一行
+    # 通过判断文件头来确定是否是M3U8文件
+    if file_line[0] != "#EXTM3U":
+        raise BaseException(u"非M3U8的链接")
+    else:
+        for index, line in enumerate(file_line):
+            if ".ts" in line:
+                allts.append(line)
 
-delete_table_sql = """\
-DELETE FROM fuck
-"""
+    for index, line in enumerate(allts):
 
-drop_table_sql = """\
-DROP TABLE fuck
-"""
+        pd_url = url.rsplit("/", 1)[0] + "/" + line
+        # print(pd_url)
+        res = requests.get(pd_url)
+        c_fule_name = str(line)
+        with open(download_path + "\\" + c_fule_name, 'ab') as f:
+            f.write(res.content)
+            f.flush()
+    print(u"下载完成")
 
-connection = pymysql.connect(host=host,
-                             user=username,
-                             password=password,
-                             charset='utf8mb4',
-                             db=db_name)
 
-try:
-    with connection.cursor() as cursor:
-        print('--------------查询数据--------------')
-        cursor.execute(query_table_sql)
-        results = cursor.fetchall()
-        for row in results:
-            print(row[0], row[1], row[2], row[3], sep='\t')
-
-        print('--------------清除数据--------------')
-finally:
-    connection.close()
+if __name__ == '__main__':
+    download(
+        "https://media-ali-oversea.wanmen.org/9cccf4a2-cfd0-4c39-9073-c033b0d2b6c1_pc_high.m3u8")
