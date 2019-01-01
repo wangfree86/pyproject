@@ -25,7 +25,7 @@ class Semd(object):
     def send_mail(self,content):
         print('000000')  # 输出i
         user_mail = 'wangfree86@gmail.com'
-        password = 'wk991721'
+        password = 'xx'
         # 我的重用简单密码
         send_mail = '15038378662@139.com'
         smtp_server = 'smtp.163.com'

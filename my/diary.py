@@ -1,11 +1,11 @@
-import docx
+# coding=utf-8
 import os
 import re
 
 import calendar
 import datetime
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+import urllib
 import re
 import pyperclip
 
@@ -44,35 +44,34 @@ def getweather():
 
     url = base_url
 
-    html = urlopen(url).read().decode('utf-8')
+    html = urllib.urlopen(url).read().decode('utf-8')
     soup = BeautifulSoup(html, features='lxml')
     # print(html)
     # 天气
     wea = soup.find('dd', class_='weather')
     kongqi=soup.find('dd', class_='kongqi')
-    kongqistr=(kongqi.h5.text+kongqi.h6.text).replace('空气质量：', '')
+    sstr=kongqi.h5.text+kongqi.h6.text
 
-    weather = "天气：" + wea.span.text + "    " + kongqistr
+    kongqistr=sstr.replace(u'空气质量：', '')
+
+    weather = u"天气：" + wea.span.text + "    " + kongqistr
+
     return weather
 
 
 if __name__ == '__main__':
-    docx_file_name = 'C:/Users/XH/Desktop/模板.docx'
-    docx_file_name1 = 'C:/Users/XH/Desktop/模板1.docx'
-    # 获取文件对象
-    file = docx.Document(docx_file_name)
     # 三个参数: 旧的字符串, 新的字符串, 文件对象
     weather = getweather()
 
-    day = '本月余额' + getday() + '天'
+    day = u'本月余额' + getday() + u'天'
 
     # replace_text('天气', weather, file)
     # replace_text('本月余额', day, file)
     # file.save(docx_file_name1)
 
-    str = weather + '\n' + day
+    str = weather + u'\n' + day
     pyperclip.copy(str)
 
-    print("成功"+str)
+    print(u"成功\n"+str)
     # print(docx_file_name1, "替换成功"+str)
 # main()
