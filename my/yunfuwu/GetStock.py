@@ -3,7 +3,9 @@ import json
 import json, urllib
 import requests
 
-
+import sys
+sys.path.append(r"D:\pyproject")
+import constant
 class GetStock:
     def __init__(self):
         self.uptime = "00"
@@ -44,8 +46,8 @@ class GetStock:
         data = {
             'app': 'finance.stock_realtime',
             'symbol': codename,
-            'appkey': '38860',
-            'sign': 'c75b85cbb4fa64e3d397049aca187715',
+            'appkey': constant.appkey,
+            'sign': constant.sign,
             'format': 'json',
         }
 

@@ -62,13 +62,3 @@ if __name__ == "__main__":
     # dl = GetStock()
     # dl.getAllStock()
 
-
-
-# 通过sys模块导入自定义模块的path
-# 如果执行文件和模块不在同一目录，这时候直接import是找不到自定义模块的。如下图：
-# import sys
-# sys.path.append(r"D:\pyproject")
-
-import constant
-constant.hi()
-print(constant.ntest)

@@ -1,4 +1,4 @@
-import constant
+
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
@@ -6,6 +6,7 @@ import time
 import smtplib
 import sys
 sys.path.append(r"D:\pyproject")
+import constant
 class SendMail:
     def format_addr(self, s):
         name, addr = parseaddr(s)
