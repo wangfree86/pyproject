@@ -9,6 +9,7 @@ from urllib.request import urlopen
 import re
 import pyperclip
 import time
+import json
 
 import requests
 
@@ -39,8 +40,8 @@ def getday():
     finallyday = str(allday - newday)
     return finallyday
 
-
-def getweather():
+# 网站抓包
+def getWebweather():
     # 获取天气信息
     # base_url = "http://www.weather.com.cn/weather1d/101010100.shtml"
     base_url = "https://www.tianqi.com/beijing/"
@@ -53,7 +54,7 @@ def getweather():
     html = requests.get(url).text
     # html = urlopen(url).read().decode('utf-8')
     soup = BeautifulSoup(html, features='lxml')
-    # print(html)
+    print(html)
     # 天气
     wea = soup.find('dd', class_='weather')
     kongqi = soup.find('dd', class_='kongqi')
@@ -62,7 +63,31 @@ def getweather():
     weather = "天气：" + wea.span.text + "    " + kongqistr
     return weather
 
+# aip抓取数据
+def getAipweather():
+    # https://www.sojson.com/blog/305.html
+    # 获取天气信息
+    # 101010100北京
+    # 101181701 三门峡
+    # 101180801 开封
+    city='101181701';
+    # base_url = "http://www.weather.com.cn/weather1d/101010100.shtml"
+    base_url = "http://t.weather.sojson.com/api/weather/city/"+city
 
+    url = base_url
+    html = requests.get(url).text
+
+    a_result = json.loads(html)
+    # 天气
+    low=a_result.get('data').get('forecast')[0].get('low').split(" ")[1]
+    high=a_result.get('data').get('forecast')[0].get('high').split(" ")[1]
+    type =a_result.get('data').get('forecast')[0].get('type')
+    wea=type+" "+low+" -- "+high
+    # kongqi = soup.find('dd', class_='kongqi')
+    kongqistr = a_result.get('data').get('quality')+'PM'+str(a_result.get('data').get('pm25'))
+
+    weather = "天气：" + wea + "    " + kongqistr
+    return weather
 # 获取当前的时间，格式化我默认的格式2019年1月15日 星期二
 def getNowDay():
     year = time.strftime("%Y年", time.localtime())
@@ -106,7 +131,7 @@ if __name__ == '__main__':
     # # 获取文件对象
     # file = docx.Document(docx_file_name)
     # 三个参数: 旧的字符串, 新的字符串, 文件对象
-    weather = getweather()
+    weather = getAipweather()
 
     day = '本月余额' + getday() + '天'
 
@@ -114,7 +139,7 @@ if __name__ == '__main__':
     # replace_text('本月余额', day, file)
     # file.save(docx_file_name1)
 
-    str =getNowDay() + '\n' + weather + '\n' + day
+    str = '三门峡'+ '\n' +getNowDay() + '\n' + weather + '\n' + day
     pyperclip.copy(str)
     getNowDay()
     # 2019年1月15日 星期二
