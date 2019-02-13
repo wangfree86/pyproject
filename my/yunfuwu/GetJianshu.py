@@ -23,8 +23,6 @@ class getJianshu:
     def jianshu(self):
         ntime = time.strftime("%H", time.localtime())
         htime = int(ntime)
-        self.ttime = self.ttime + 1
-        print('查询简书了' + str(self.ttime))
         if htime >= 21 and False == self.janshucom:
             self.ttime = self.ttime + 1
             print('查询简书了' + str(self.ttime))

@@ -9,7 +9,9 @@ from GetJianshu import *
 from bs4 import BeautifulSoup
 import requests
 import time
-
+import sys
+sys.path.append(r"D:\pyproject")
+import constant
 
 class getAll:
     def __init__(self):
@@ -39,20 +41,20 @@ class getAll:
 
     def execute1(self):
         # 一直开启的循环10分钟执行一次任务，不停止
-        i = 0
+        i = 1
+        jinshu=getJianshu()
         while True:
             # 还原初始化之，每天零点还原一次
             nstr = str(i) + '循环执行中:' + '--------' + time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
             i += 1
             print(nstr)  # 输出i
 
-            jinshu=getJianshu()
+
             jinshu.jianshu()
             jinshu.restoretime()
 
             self.testsendmail()
-            # time.sleep(60 )  # 休眠 秒
-            time.sleep(60 * 10)  # 休眠 秒
+            time.sleep(constant.sellpnum)  # 休眠 秒
 
 
 if __name__ == "__main__":

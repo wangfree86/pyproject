@@ -13,8 +13,10 @@ class SendMail:
         return formataddr((Header(name, 'utf-8').encode(), addr))
     # 海外在
     def accesssendmail(self,content):
-        # self.inland_esend_mail("title",content)
-        self.googlesend_mail("title",content)
+        if constant.google:
+            self.googlesend_mail("title",content)
+        else:
+            self.inland_esend_mail("title",content)
     def googlesend_mail(self,title,content):
         user_mail = constant.user_mail1
         password = constant.password1
