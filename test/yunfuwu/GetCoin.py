@@ -41,15 +41,14 @@ class GetCoin:
                 time_local = time.localtime(coins.get("openTime")/1000)
                 #转换成新的时间格式(2016-05-05 20:28:54)
                 nowtime = time.strftime("%Y-%m-%d %H:%M:%S",time_local)
-                newstr='币：'+coins.get("symbol")+' ：'+coins.get("priceChangePercent")+'%    ' \
+                newstr='币：'+coins.get("symbol")+' ：'+coins.get("priceChangePercent")+'%    '\
                        +coins.get("lastPrice")+'美金   时间：'+nowtime
                 allcoin=allcoin+"\n"+newstr
 
                 info = []
                 info.append(nowtime)
-                info.append(coins.get("lastPrice") + "美金")
                 info.append(coins.get("priceChangePercent") + '% ')
-
+                info.append(coins.get("lastPrice") + "美金")
                 save_infor(coins.get("symbol") + '.csv', info, nowtime)
                 print(newstr)
         return allcoin
@@ -65,7 +64,7 @@ def save_infor(name, info, ntime):
             csv.write_csv(name, info)
 
     else:
-        csv.create_csv(name, ['time', 'last_price','rise_fall_per', ])
+        csv.create_csv(name, ['time', 'rise_fall_per','last_price', ])
         csv.write_csv(name, info)
 
 

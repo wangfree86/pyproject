@@ -7,7 +7,6 @@ import sys
 
 sys.path.append(r"D:\pyproject")
 import constant
-import csv
 import utils.cvsutils as csv
 
 
@@ -31,8 +30,8 @@ class GetStock:
         return numbers.get(num, None)
 
     def getAllStock(self):
-        # allstock = ['gb_sqqq']
-        allstock = ['gb_sqqq', 'gb_chau', 'gb_ugld', 'gb_vnm', 'gb_ewt', 'gb_scif']
+        allstock = ['gb_sqqq']
+        # allstock = ['gb_sqqq', 'gb_chau', 'gb_ugld', 'gb_vnm', 'gb_ewt', 'gb_scif']
         allstr = ''
         stock = GetStock()
         for name in allstock:
@@ -72,8 +71,8 @@ class GetStock:
 
                 info = []
                 info.append(stock['uptime'])
-                info.append(stock['last_price'] + "美金")
                 info.append(stock['rise_fall_per'] + '% ')
+                info.append(stock['last_price'] + "美金")
                 save_infor(self.num_to_week(stock['symbol']) + '.csv', info, stock['uptime'])
             else:
                 print(a_result['msgid'] + ' ' + a_result['msg'])

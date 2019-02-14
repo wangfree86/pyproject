@@ -21,8 +21,9 @@ class getAll:
     def testsendmail(self):
         ntime = int(time.strftime("%H", time.localtime()))
         mtime = int(time.strftime("%M", time.localtime()))
-        # 3的倍数时间，分钟小于10分钟时候发送一次
-        if ntime % 8 == 0 and mtime < 10:
+        #确定多长时间发送一次
+        if mtime < 110:
+        # if ntime % 8 == 0 and mtime < 10:
             try:
                 stock = GetStock.getAllStock(self)
             except:
