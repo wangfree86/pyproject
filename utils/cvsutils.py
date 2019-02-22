@@ -1,5 +1,3 @@
-
-
 def save_infor(one_page_film):
     '''
     存储提取好的电影信息
@@ -17,7 +15,7 @@ import csv
 
 # 创建一个cvs，初二
 def create_csv(path, data_row):
-    with open(path, 'w+',newline='') as f:
+    with open(path, 'w+', newline='') as f:
         csv_write = csv.writer(f)
         csv_write.writerow(data_row)
 
@@ -26,9 +24,9 @@ import os
 
 
 def write_csv(path, data_row):
-        with open(path, 'a+',newline='') as f:
-            csv_write = csv.writer(f)
-            csv_write.writerow(data_row)
+    with open(path, 'a+', newline='') as f:
+        csv_write = csv.writer(f)
+        csv_write.writerow(data_row)
 
 
 # 读取表格，获取最后一行的日期
@@ -44,6 +42,13 @@ def read_end_time(path):
     return a
 
 
+def read(path):
+    # 读取csv至字典
+    csvFile = open(path, "r")
+    reader = csv.reader(csvFile)
+    return reader
+
+
 import datetime
 
 
@@ -55,3 +60,18 @@ def isequal(oldtime, uptime):
         return False
 
 
+# 读csv文件返回json
+def read_csv_json(path):
+    csv_rows = []
+    with open(path) as csvfile:
+        # 获取全部数据
+        reader = csv.DictReader(csvfile)
+        # 获取title数据
+        titles = reader.fieldnames
+        for row in reader:
+            dict1 = {}
+            for title in titles:  # 第二个实例
+                dict1.setdefault(title, row[title])
+            csv_rows.append(dict1)
+        # print(csv_rows)
+        return csv_rows

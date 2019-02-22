@@ -67,10 +67,10 @@ def getWebweather():
 def getAipweather():
     # https://www.sojson.com/blog/305.html
     # 获取天气信息
-    # 101010100北京
+    # 101010100 北京
     # 101181701 三门峡
     # 101180801 开封
-    city='101181701';
+    city='101010100';
     # base_url = "http://www.weather.com.cn/weather1d/101010100.shtml"
     base_url = "http://t.weather.sojson.com/api/weather/city/"+city
 
@@ -139,7 +139,7 @@ if __name__ == '__main__':
     # replace_text('本月余额', day, file)
     # file.save(docx_file_name1)
 
-    str = '三门峡'+ '\n' +getNowDay() + '\n' + weather + '\n' + day
+    str = getNowDay() + '\n' + weather + '\n' + day + '\n'
     pyperclip.copy(str)
     getNowDay()
     # 2019年1月15日 星期二

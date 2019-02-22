@@ -22,8 +22,8 @@ class getAll:
         ntime = int(time.strftime("%H", time.localtime()))
         mtime = int(time.strftime("%M", time.localtime()))
         #确定多长时间发送一次
-        if mtime < 110:
-        # if ntime % 8 == 0 and mtime < 10:
+        # if mtime < 110:
+        if ntime % 8 == 0 and mtime < 10:
             try:
                 stock = GetStock.getAllStock(self)
             except:
@@ -62,6 +62,4 @@ if __name__ == "__main__":
 
     dl = getAll()
     dl.execute1()
-    # dl = GetStock()
-    # dl.getAllStock()
 

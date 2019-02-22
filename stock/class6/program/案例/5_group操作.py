@@ -5,7 +5,8 @@ date: 2017年05月06日
 本程序展示group_by操作
 """
 import pandas as pd
-from program import config
+import config
+
 pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 
 
@@ -60,8 +61,8 @@ stock_data = pd.read_hdf(config.output_data_path + '/all_stock_data_h5.h5', key=
 # 语法：for key, group in df.groupby('列名'):
 
 for code, group in stock_data.groupby('股票代码'):
-    print code
-    print group
+    print (code)
+    print (group)
 
     # 以下可以对各个group进行任意操作。
     group.fillna()

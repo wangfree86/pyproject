@@ -1,5 +1,6 @@
 from GetStock import *
 from GetCoin import *
+# 单元测试代码
 class getAll:
 
     if __name__ == "__main__":

@@ -21,8 +21,8 @@ df = Functions.import_stock_data(code)
 
 def f12(x,y):
     # print x
-    print type(x)
-    print y[0:3]
+    print (type(x))
+    print (y[0:3])
     exit()
     return x + 10000
     # x究竟是什么？
@@ -35,8 +35,8 @@ def f12(x,y):
 # 通常用于定义一些比较简单的、一行代码可以表述清楚的、一次性的函数。比较复杂就不要使用。
 # 以下是几个案例
 
-print df['收盘价'].apply(lambda x: int(x * 100))
-print df['股票代码'].apply(lambda x: x[2:3] + x[:2].upper())[0:9]
+# print df['收盘价'].apply(lambda x: int(x * 100))
+# print df['股票代码'].apply(lambda x: x[2:3] + x[:2].upper())[0:9]
 exit()
 
 # apply、lambda是较高级的应用，大家一开始不用强行使用。之后看的多了自然也就理解会用了
