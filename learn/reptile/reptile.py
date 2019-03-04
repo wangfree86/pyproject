@@ -4,11 +4,12 @@ import re
 import random
 
 
-base_url = "http://tieba.baidu.com/p/2256306796"
+base_url = "https://www.joinquant.com/post/11567?f=sharelist&m=list"
 
 url = base_url
 
 html = urlopen(url).read().decode('utf-8')
+print(html)
 soup = BeautifulSoup(html, features='lxml')
 
 div = soup.find_all('img', class_ = 'BDE_Image')

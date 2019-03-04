@@ -5,8 +5,8 @@ date: 2017年05月14日
 本段程序用于生成选股策略所需要的数据
 """
 import pandas as pd
-from program import config
-from program import Functions
+import config
+import Functions
 pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 
 
@@ -16,11 +16,14 @@ stock_code_list = stock_code_list[:20]
 
 # ===循环读取并且合并
 # 导入上证指数
-index_data = Functions.import_sh000001_data()[['交易日期']]
+index_data = Functions.import_sh000001_data()
+
+print(index_data)
+exit()
 # 循环读取股票数据
 all_stock_data = pd.DataFrame()
 for code in stock_code_list:
-    print code
+    print (code)
 
     # 读入数据，额外读入'总市值'这一列
     df = Functions.import_stock_data(code, other_columns=['总市值'])
@@ -53,7 +56,7 @@ for code in stock_code_list:
 # 将数据存入数据库之前，先排序、reset_index
 all_stock_data.sort_values(['交易日期', '股票代码'], inplace=True)
 all_stock_data.reset_index(inplace=True, drop=True)
-print '股票数据行数', len(all_stock_data)
+print ('股票数据行数', len(all_stock_data))
 
 # 将数据存储到hdf文件
 all_stock_data.to_hdf(config.output_data_path + '/all_stock_data_sample.h5', 'all_stock_data', mode='w')
